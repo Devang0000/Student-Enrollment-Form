@@ -1,94 +1,94 @@
 // Constants (replace with your actual values)
-        const connToken = "90934641|-31949206928348581|90956474";
-        const empDBName = "Student";
-        const empRelationName = "Student Rel";
-        const jpdbBaseURL = "http://api.login2explore.com:5577";
-        const jpdbIML = "/api/iml";
-        const jpdbIRL = "/api/irl";
+const connToken = "90934641|-31949206928348581|90956474";
+const dbName = "Student";
+const relationName = "Student Rel";
+const jpdbBaseURL = "http://api.login2explore.com:5577";
+const jpdbIML = "/api/iml";
+const jpdbIRL = "/api/irl";
 
-        function validateData() {
-        var empid = $("#empid").val();
-                var empname = $("#empname").val();
-                var empsal = $("#empsal").val();
-                var hra = $("#hra").val();
-                var da = $("#da").val();
+function validateData() {
+    var rollno = $("#rollno").val();
+    var name = $("#name").val();
+    var clas = $("#class").val();
+    var section = $("#section").val();
+    var dob = $("#dob").val();
 
-                if (empid === "") {
-                alert("Employee ID missing");
-                        $("#empid").focus();
-                        return "";
-                }
-        if (empname === "") {
-        alert("Employee Name missing");
-                $("#empname").focus();
-                return "";
-        }
-        if (empsal === "") {
-        alert("Employee Salary missing");
-                $("#empsal").focus();
-                return "";
-        }
-        if (hra === "") {
-        alert("HRA missing");
-                $("#hra").focus();
-                return "";
-        }
-        if (da === "") {
-        alert("DA missing");
-                $("#da").focus();
-                return "";
-        }
+    if (rollno === "") {
+        alert("Roll No is missing");
+        $("#rollno").focus();
+        return "";
+    }
+    if (name === "") {
+        alert("Student Name is missing");
+        $("#name").focus();
+        return "";
+    }
+    if (clas === "") {
+        alert("Class is missing");
+        $("#class").focus();
+        return "";
+    }
+    if (section === "") {
+        alert("Section is missing");
+        $("#section").focus();
+        return "";
+    }
+    if (dob === "") {
+        alert("Date of Birth is missing");
+        $("#dob").focus();
+        return "";
+    }
 
-        var jsonStrObj = {
-        id: empid,
-                name: empname,
-                salary: empsal,
-                hra: hra,
-                da: da
-        };
-                return JSON.stringify(jsonStrObj);
-        }
+    var jsonStrObj = {
+        id: rollno,
+        name: name,
+        class: clas,
+        section: section,
+        dob: dob
+    };
+    return JSON.stringify(jsonStrObj);
+}
 
 function saveData() {
-var jsonStrObj = validateData();
-        if (jsonStrObj === "") {
+    var jsonStrObj = validateData();
+    if (jsonStrObj === "") {
         return;
-        }
+    }
 
-var putRequest = createPUTRequest(connToken, jsonStrObj, empDBName, empRelationName);
-        jQuery.ajaxSetup({ async: false });
-        var resJsonObj = executeCommandAtGivenBaseUrl(putRequest, jpdbBaseURL, jpdbIML);
-        jQuery.ajaxSetup({ async: true });
+    var putRequest = createPUTRequest(connToken, jsonStrObj, dbName, relationName);
+    jQuery.ajaxSetup({ async: false });
+    var resJsonObj = executeCommandAtGivenBaseUrl(putRequest, jpdbBaseURL, jpdbIML);
+    jQuery.ajaxSetup({ async: true });
 
-        alert("Data Saved Successfully");
-        resetForm();
+    alert("Student Data Saved Successfully");
+    resetForm();
 }
 
 function changeData() {
-$('#change').prop('disabled', true);
+    $('#change').prop('disabled', true);
 
-        var jsonChg = validateData();
-        if (jsonChg === "") {
+    var jsonChg = validateData();
+    if (jsonChg === "") {
         return;
-        }
+    }
 
-var updateRequest = createUPDATERecordRequest(connToken, jsonChg, empDBName, empRelationName, localStorage.getItem("recno"));
-        jQuery.ajaxSetup({ async: false });
-        var resJsonObj = executeCommandAtGivenBaseUrl(updateRequest, jpdbBaseURL, jpdbIML);
-        jQuery.ajaxSetup({ async: true });
+    var updateRequest = createUPDATERecordRequest(connToken, jsonChg, dbName, relationName, localStorage.getItem("recno"));
+    jQuery.ajaxSetup({ async: false });
+    var resJsonObj = executeCommandAtGivenBaseUrl(updateRequest, jpdbBaseURL, jpdbIML);
+    jQuery.ajaxSetup({ async: true });
 
-        alert("Data Updated Successfully");
-        resetForm();
+    alert("Student Data Updated Successfully");
+    resetForm();
 }
 
 function resetForm() {
-$("#empid").val("");
-        $("#empname").val("");
-        $("#empsal").val("");
-        $("#hra").val("");
-        $("#da").val("");
-        $("#empid").prop("disabled", false);
-        $("#save").prop("disabled", false);
-        $("#change").prop("disabled", true);
-        $("#empid").focus();
+    $("#rollno").val("");
+    $("#name").val("");
+    $("#class").val("");
+    $("#section").val("");
+    $("#dob").val("");
+    $("#rollno").prop("disabled", false);
+    $("#save").prop("disabled", false);
+    $("#change").prop("disabled", true);
+    $("#rollno").focus();
 }
